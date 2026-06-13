@@ -3,6 +3,9 @@ import User from "../models/user.model.js";
 
 export async function protectRoute(req, res, next) {
   try {
+    console.log("HEADERS =>", req.headers.authorization);
+    console.log("AUTH =>", getAuth(req));
+
     const { userId } = getAuth(req);
 
     if (!userId) {
