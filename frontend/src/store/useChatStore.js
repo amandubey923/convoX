@@ -22,23 +22,31 @@ export const useChatStore = create(
       isSoundEnabled: true,
       isSendingMedia: false,
 
-      getUsers: async () => {
-        set({ isUsersLoading: true });
-        try {
-          const res = await axiosInstance.get("/messages/users");
-          set((state) => ({
-            users: res.data,
-            selectedUser:
-              state.selectedUser && res.data.some((user) => user._id === state.selectedUser._id)
-                ? state.selectedUser
-                : null,
-          }));
-        } catch (error) {
-          console.log("Error in get Users", error.message);
-        } finally {
-          set({ isUsersLoading: false });
-        }
-      },
+     getUsers: async () => {
+  set({ isUsersLoading: true });
+
+  try {
+    const res = await axiosInstance.get("/messages/users");
+
+    console.log("USERS API SUCCESS");
+    console.log("STATUS =>", res.status);
+    console.log("DATA =>", res.data);
+
+    set((state) => ({
+      users: res.data,
+      selectedUser:
+        state.selectedUser &&
+        res.data.some((user) => user._id === state.selectedUser._id)
+          ? state.selectedUser
+          : null,
+    }));
+  } catch (error) {
+    console.log("USERS API ERROR =>", error);
+    console.log("RESPONSE =>", error.response?.data);
+  } finally {
+    set({ isUsersLoading: false });
+  }
+},
 
       getConversations: async () => {
         set({ isConversationsLoading: true });
