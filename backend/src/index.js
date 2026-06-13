@@ -11,6 +11,7 @@ import job from './jobs/cleanup.job.js';
 import clerkWebhook from './webhooks/clerk.webhook.js';
 import fs from 'fs';
 import path from 'path';
+import {server} from './lib/socket.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -37,7 +38,9 @@ if(fs.existsSync(publicDir)) {
 }
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-app.listen(PORT, () => {
+
+
+server.listen(PORT, () => {
     connectDB();
     console.log(`Server is running on port ${PORT}`);
 
