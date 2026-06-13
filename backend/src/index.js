@@ -36,6 +36,7 @@ if(fs.existsSync(publicDir)) {
     });
 }
 app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 app.listen(PORT, () => {
     connectDB();
     console.log(`Server is running on port ${PORT}`);
